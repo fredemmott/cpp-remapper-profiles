@@ -7,32 +7,6 @@
  */
 #include "easymode.h"
 
-#include <cmath>
-
-using namespace fredemmott::inputmapping;
-
-class SquareDeadzone : public AxisAction {
-  public:
-    SquareDeadzone(uint8_t percent, const AxisEventHandler& next): mPercent(percent), mNext(next) {}
-    void map(long value) {
-      // Recenter around (0, 0), then scale. The original mid
-      // point is now the max
-      const long MID = 0x7fff;
-      value -= MID;
-      const long live = (MID * mPercent) / 100;
-      if (abs(value) < live) {
-        mNext->map(MID);
-      }
-      const long new_scale = MID - live;
-      const long scaled = ((value - live) * new_scale) / MID;
-      const long and_back_again = (scaled * MID ) / new_scale;
-      mNext->map(and_back_again + MID);
-    }
-  private:
-    uint8_t mPercent;
-    AxisEventHandler mNext;
-};
-
 /** Mapping for Elite Dangerous.
  *
  * - add tiny deadzones to all axis: if you have sensitive devices, the moment
