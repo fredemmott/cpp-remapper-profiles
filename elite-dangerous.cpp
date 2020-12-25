@@ -26,12 +26,10 @@ int main() {
   p->passthrough(r, vr);
 
   p->map({
-    { l.XAxis, SquareDeadzone { 1, vl.XAxis } },
-    { l.YAxis, SquareDeadzone { 1, vl.YAxis } },
-    { l.ZAxis, SquareDeadzone { 1, vl.ZAxis } },
-    { r.XAxis, SquareDeadzone { 1, vr.XAxis } },
-    { r.YAxis, SquareDeadzone { 1, vr.YAxis } },
-    { r.ZAxis, SquareDeadzone { 1, vr.ZAxis } },
+    { l.XAxis, SquareDeadzone { 10, vl.XAxis } },
+    { l.YAxis, SquareDeadzone { 10, vl.YAxis } },
+    { r.XAxis, SquareDeadzone { 10, vr.XAxis } },
+    { r.YAxis, SquareDeadzone { 10, vr.YAxis } },
   });
 
   p->run();
