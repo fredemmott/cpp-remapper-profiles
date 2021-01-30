@@ -18,6 +18,12 @@ int main() {
   p->passthrough(throttle, vj1);
   p->passthrough(stick, vj2);
 
+  // Alias stick pinky switch to bottom right thumb button; this means:
+  // - 'left aux' and 'right aux' make sense
+  // - you can grip 'left aux' and 'right aux' at the same time if you want
+  //   to rocket spam
+  p->map(stick.Button30, vj2.Button6);
+
   // Replace the ministick mappings on both devices to additional buttons
   p->map({
     {
