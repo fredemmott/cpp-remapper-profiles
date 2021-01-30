@@ -9,7 +9,7 @@
 
 int main() {
   auto [p, throttle, stick, vj1, vj2] = create_profile(
-    TM_WARTHOG_THROTTLE,
+    VPC_MT50CM3_THROTTLE,
     VPC_RIGHT_WARBRD,
     VJOY_1,
     VJOY_2
