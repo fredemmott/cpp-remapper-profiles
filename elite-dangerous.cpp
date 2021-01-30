@@ -31,8 +31,8 @@ int main() {
     // XY deadzones
     { l.XAxis, SquareDeadzone { 5, vl.XAxis } },
     { l.YAxis, SquareDeadzone { 5, vl.YAxis } },
-    { r.XAxis, SquareDeadzone { 5, vr.RXAxis } },
-    { r.YAxis, SquareDeadzone { 5, vr.RYAxis } },
+    { r.XAxis, SquareDeadzone { 5, vr.XAxis } },
+    { r.YAxis, SquareDeadzone { 5, vr.YAxis } },
     // Thumbstick deadzones
     { l.RXAxis, SquareDeadzone { 90, vl.RXAxis } },
     { l.RYAxis, SquareDeadzone { 90, vl.RYAxis } },
