@@ -6,31 +6,26 @@
  * in the root directory of this source tree.
  */
 #include "easymode.h"
-
 #include "hidhide.h"
 
 int main() {
-  auto [p, throttle, stick, x360] = create_profile(
-    VPC_MT50CM3_THROTTLE,
-    VPC_RIGHT_WARBRD,
-    VIGEM_X360_PAD_1
-  );
+  auto [p, throttle, stick, x360]
+    = create_profile(VPC_MT50CM3_THROTTLE, VPC_RIGHT_WARBRD, VIGEM_X360_PAD_1);
 
   // BF2042 fails if there are *any* other DirectInput game controllers,
   // so hide them all.
-  ::fredemmott::gameinput::HidHide hide_unused_devices({
-    // VJoy 1
-    HardwareID { "HID\\HIDCLASS&Col01" },
-    // VJoy 2
-    HardwareID { "HID\\HIDCLASS&Col02" }
-  });
+  ::fredemmott::gameinput::HidHide hide_unused_devices(
+    {// VJoy 1
+     HardwareID {"HID\\HIDCLASS&Col01"},
+     // VJoy 2
+     HardwareID {"HID\\HIDCLASS&Col02"}});
 
   auto invert = [](Axis::Value value) { return Axis::MAX - value; };
 
   // 'default' layout in BF2042
 
   ////////////////
-  ///// axes ///// 
+  ///// axes /////
   ////////////////
 
   // throttle
@@ -43,7 +38,7 @@ int main() {
   stick.YAxis >> SquareDeadzone(5) >> x360.RYAxis;
 
   ///////////////////
-  ///// buttons ///// 
+  ///// buttons /////
   ///////////////////
   // trigger
   stick.Button3 >> ButtonToAxis() >> x360.RTrigger;

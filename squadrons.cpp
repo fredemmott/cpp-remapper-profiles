@@ -8,50 +8,34 @@
 #include "easymode.h"
 
 int main() {
-  auto [p, throttle, stick, vj1, vj2] = create_profile(
-    VPC_MT50CM3_THROTTLE,
-    VPC_RIGHT_WARBRD,
-    VJOY_1,
-    VJOY_2
-  );
+  auto [p, throttle, stick, vj1, vj2]
+    = create_profile(VPC_MT50CM3_THROTTLE, VPC_RIGHT_WARBRD, VJOY_1, VJOY_2);
 
   p->passthrough(throttle, vj1);
   p->passthrough(stick, vj2);
+
+  const auto THROTTLE_BUTTONS = throttle.getButtonCount();
+  const auto STICK_BUTTONS = stick.getButtonCount();
 
   // Alias stick pinky switch to bottom right thumb button; this means:
   // - 'left aux' and 'right aux' make sense
   // - you can grip 'left aux' and 'right aux' at the same time if you want
   //   to rocket spam
-  p->map(stick.Button30, vj2.Button6);
+  stick.Button30 >> vj2.Button6;
 
   // Replace the ministick mappings on both devices to additional buttons
-  p->map({
-    {
-      throttle.XAxis,
-      AxisToButtons {
-        { 0, 5, vj1.button(throttle.ButtonCount + 1) },
-        { 95, 100, vj1.button(throttle.ButtonCount  + 2) }
-      },
-    }, {
-      throttle.YAxis,
-      AxisToButtons {
-        { 0, 5, vj1.button(throttle.ButtonCount + 3) },
-        { 95, 100, vj1.button(throttle.ButtonCount + 4) }
-      },
-    }, {
-      stick.RXAxis,
-      AxisToButtons {
-        { 0, 5, vj2.button(stick.ButtonCount + 1) },
-        { 95, 100, vj2.button(stick.ButtonCount + 2) }
-      },
-    }, {
-      stick.RYAxis,
-      AxisToButtons {
-        { 0, 5, vj2.button(stick.ButtonCount + 3) },
-        { 95, 100, vj2.button(stick.ButtonCount + 4) }
-      },
-    },
-  });
+  throttle.XAxis >> AxisToButtons {
+    {0, 5, vj1.button(THROTTLE_BUTTONS + 1)},
+    {95, 100, vj1.button(THROTTLE_BUTTONS + 2)}};
+  throttle.YAxis >> AxisToButtons {
+    {0, 5, vj1.button(THROTTLE_BUTTONS + 3)},
+    {95, 100, vj1.button(THROTTLE_BUTTONS + 4)}};
+  stick.RXAxis >> AxisToButtons {
+    {0, 5, vj2.button(STICK_BUTTONS + 1)},
+    {95, 100, vj2.button(STICK_BUTTONS + 2)}};
+  stick.RYAxis >> AxisToButtons {
+    {0, 5, vj2.button(STICK_BUTTONS + 3)},
+    {95, 100, vj2.button(STICK_BUTTONS + 4)}};
 
   p->run();
   return 0;
