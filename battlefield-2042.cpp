@@ -51,6 +51,8 @@ int main() {
   stick.Button29 >> x360.DPadLeft;
   // A10C CMS right => equipment 2
   stick.Button27 >> x360.DPadRight;
+  // Pinky switch => chase cam
+  stick.Button30 >> x360.ButtonRStick;
   // side thumb -> afterburner/flight assist
   throttle.Button21 >> x360.ButtonLStick;
   // pinky -> map
