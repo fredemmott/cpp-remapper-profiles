@@ -28,10 +28,10 @@ int main() {
   ///// axes /////
   ////////////////
 
-  // Inverted curves for quicker response near the center
+  // Negative curves for quicker response near the center, to allow the quick flips
+  // that are expected with a gamepad
 
   // throttle
-  // TODO: add test for this chain
   throttle.RXAxis >> invert >> SquareDeadzone(10) >> AxisCurve(-0.5) >> x360.LYAxis;
   // twist -> yaw
   stick.ZAxis >> SquareDeadzone(10) >> AxisCurve(-0.5) >> x360.LXAxis;
