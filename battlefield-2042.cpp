@@ -28,14 +28,17 @@ int main() {
   ///// axes /////
   ////////////////
 
+  // Inverted curves for quicker response near the center
+
   // throttle
-  throttle.RXAxis >> invert >> SquareDeadzone(10) >> x360.LYAxis;
+  // TODO: add test for this chain
+  throttle.RXAxis >> invert >> SquareDeadzone(10) >> AxisCurve(-0.5) >> x360.LYAxis;
   // twist -> yaw
-  stick.ZAxis >> SquareDeadzone(5) >> x360.LXAxis;
+  stick.ZAxis >> SquareDeadzone(10) >> AxisCurve(-0.5) >> x360.LXAxis;
   // roll
-  stick.XAxis >> SquareDeadzone(5) >> x360.RXAxis;
+  stick.XAxis >> SquareDeadzone(5) >> AxisCurve(-0.5) >> x360.RXAxis;
   // pitch
-  stick.YAxis >> SquareDeadzone(5) >> x360.RYAxis;
+  stick.YAxis >> SquareDeadzone(5) >> AxisCurve(-0.5) >> x360.RYAxis;
 
   ///////////////////
   ///// buttons /////
