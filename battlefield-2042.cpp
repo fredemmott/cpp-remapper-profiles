@@ -10,15 +10,14 @@
 
 int main() {
   auto [p, throttle, stick, x360]
-    = create_profile(VPC_MT50CM3_THROTTLE, VPC_RIGHT_WARBRD, VIGEM_X360_PAD_1);
+    = create_profile(VPC_MT50CM3_THROTTLE, VPC_RIGHT_WARBRD, VIGEM_X360_PAD);
 
   // BF2042 fails if there are *any* other DirectInput game controllers,
   // so hide them all.
-  ::fredemmott::gameinput::HidHide hide_unused_devices(
-    {// VJoy 1
-     HardwareID {"HID\\HIDCLASS&Col01"},
-     // VJoy 2
-     HardwareID {"HID\\HIDCLASS&Col02"}});
+  HidHide hide_unused_devices({// VJoy 1
+                               HardwareID {"HID\\HIDCLASS&Col01"},
+                               // VJoy 2
+                               HardwareID {"HID\\HIDCLASS&Col02"}});
 
   auto invert = [](Axis::Value value) { return Axis::MAX - value; };
 
@@ -28,11 +27,12 @@ int main() {
   ///// axes /////
   ////////////////
 
-  // Negative curves for quicker response near the center, to allow the quick flips
-  // that are expected with a gamepad
+  // Negative curves for quicker response near the center, to allow the quick
+  // flips that are expected with a gamepad
 
   // throttle
-  throttle.RXAxis >> invert >> SquareDeadzone(10) >> AxisCurve(-0.5) >> x360.LYAxis;
+  throttle.RXAxis >> invert >> SquareDeadzone(10) >> AxisCurve(-0.5)
+    >> x360.LYAxis;
   // twist -> yaw
   stick.ZAxis >> SquareDeadzone(10) >> AxisCurve(-0.5) >> x360.LXAxis;
   // roll
