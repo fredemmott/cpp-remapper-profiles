@@ -25,17 +25,17 @@ int main() {
 
   // Replace the ministick mappings on both devices to additional buttons
   throttle.XAxis >> AxisToButtons {
-    {0, 5, vj1.button(THROTTLE_BUTTONS + 1)},
-    {95, 100, vj1.button(THROTTLE_BUTTONS + 2)}};
+    {0_percent, 5_percent, vj1.button(THROTTLE_BUTTONS + 1)},
+    {95_percent, 100_percent, vj1.button(THROTTLE_BUTTONS + 2)}};
   throttle.YAxis >> AxisToButtons {
-    {0, 5, vj1.button(THROTTLE_BUTTONS + 3)},
-    {95, 100, vj1.button(THROTTLE_BUTTONS + 4)}};
+    {0_percent, 5_percent, vj1.button(THROTTLE_BUTTONS + 3)},
+    {95_percent, 100_percent, vj1.button(THROTTLE_BUTTONS + 4)}};
   stick.RXAxis >> AxisToButtons {
-    {0, 5, vj2.button(STICK_BUTTONS + 1)},
-    {95, 100, vj2.button(STICK_BUTTONS + 2)}};
+    {0_percent, 5_percent, vj2.button(STICK_BUTTONS + 1)},
+    {95_percent, 100_percent, vj2.button(STICK_BUTTONS + 2)}};
   stick.RYAxis >> AxisToButtons {
-    {0, 5, vj2.button(STICK_BUTTONS + 3)},
-    {95, 100, vj2.button(STICK_BUTTONS + 4)}};
+    {0_percent, 5_percent, vj2.button(STICK_BUTTONS + 3)},
+    {95_percent, 100_percent, vj2.button(STICK_BUTTONS + 4)}};
 
   p->run();
   return 0;

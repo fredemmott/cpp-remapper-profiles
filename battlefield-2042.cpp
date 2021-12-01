@@ -5,8 +5,8 @@
  * This source code is licensed under the ISC license found in the LICENSE file
  * in the root directory of this source tree.
  */
+#include "HidHide.h"
 #include "easymode.h"
-#include "hidhide.h"
 
 int main() {
   auto [p, throttle, stick, x360]
@@ -31,14 +31,14 @@ int main() {
   // flips that are expected with a gamepad
 
   // throttle
-  throttle.RXAxis >> invert >> SquareDeadzone(10) >> AxisCurve(-0.5)
+  throttle.RXAxis >> invert >> SquareDeadzone(10_percent) >> AxisCurve(-0.5)
     >> x360.LYAxis;
   // twist -> yaw
-  stick.ZAxis >> SquareDeadzone(10) >> AxisCurve(-0.5) >> x360.LXAxis;
+  stick.ZAxis >> SquareDeadzone(10_percent) >> AxisCurve(-0.5) >> x360.LXAxis;
   // roll
-  stick.XAxis >> SquareDeadzone(5) >> AxisCurve(-0.5) >> x360.RXAxis;
+  stick.XAxis >> SquareDeadzone(5_percent) >> AxisCurve(-0.5) >> x360.RXAxis;
   // pitch
-  stick.YAxis >> SquareDeadzone(5) >> AxisCurve(-0.5) >> x360.RYAxis;
+  stick.YAxis >> SquareDeadzone(5_percent) >> AxisCurve(-0.5) >> x360.RYAxis;
 
   ///////////////////
   ///// buttons /////

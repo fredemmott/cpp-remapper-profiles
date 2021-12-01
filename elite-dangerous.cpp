@@ -24,16 +24,16 @@ int main() {
   p->passthrough(r, vr);
 
   // XY deadzones
-  l.XAxis >> SquareDeadzone(5) >> vl.XAxis;
-  l.YAxis >> SquareDeadzone(5) >> vl.YAxis;
-  r.XAxis >> SquareDeadzone(5) >> vr.XAxis;
-  r.YAxis >> SquareDeadzone(5) >> vr.YAxis;
+  l.XAxis >> SquareDeadzone(5_percent) >> vl.XAxis;
+  l.YAxis >> SquareDeadzone(5_percent) >> vl.YAxis;
+  r.XAxis >> SquareDeadzone(5_percent) >> vr.XAxis;
+  r.YAxis >> SquareDeadzone(5_percent) >> vr.YAxis;
 
   // Thumbstick deadzones
-  l.RXAxis >> SquareDeadzone(90) >> vl.RXAxis;
-  l.RYAxis >> SquareDeadzone(90) >> vl.RYAxis;
-  r.RXAxis >> SquareDeadzone(90) >> vr.RXAxis;
-  r.RYAxis >> SquareDeadzone(90) >> vr.RYAxis;
+  l.RXAxis >> SquareDeadzone(90_percent) >> vl.RXAxis;
+  l.RYAxis >> SquareDeadzone(90_percent) >> vl.RYAxis;
+  r.RXAxis >> SquareDeadzone(90_percent) >> vr.RXAxis;
+  r.RYAxis >> SquareDeadzone(90_percent) >> vr.RYAxis;
 
   p->run();
   return 0;
