@@ -9,7 +9,7 @@
 #include "easymode.h"
 
 int main() {
-  auto [p, cyclic, vj] = create_profile(VPC_MT50CM2_STICK, VJOY_1);
+  auto [p, cyclic, vj, hide_unused_vj2] = create_profile(VPC_MT50CM2_STICK, VJOY_1, VJOY_2);
 
   // Pass through everything :)
   cyclic >> vj;
