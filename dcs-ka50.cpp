@@ -101,25 +101,6 @@ class AxisTrimmer final {
   Axis::Value mStartValue = 0;
 };
 
-template <class T>
-class Lockout final : public Sink<T>, public Source<T> {
- private:
-  SourcePtr<T> mLock;
-  typename T::Value mCutoff;
-
- public:
-  Lockout(const SourcePtr<T>& lock, typename T::Value cutoff = 1)
-    : mLock(lock), mCutoff(cutoff) {
-  }
-
-  virtual void map(typename T::Value value) override {
-    if (mLock->value() >= mCutoff) {
-      return;
-    }
-    this->emit(value);
-  }
-};
-
 int main() {
   auto [p, cyclic, vj] = create_profile(VPC_MT50CM2_STICK, VJOY_1);
 
