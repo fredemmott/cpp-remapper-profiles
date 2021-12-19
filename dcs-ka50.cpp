@@ -43,55 +43,6 @@ auto any(First&& first, Rest&&... rest) {
   return std::static_pointer_cast<ButtonSource>(impl);
 }
 
-class AxisTrimmer final : public Source<Axis>, public Sink<Axis> {
- private:
- public:
-  const ButtonSinkPtr ResetButton = [this](bool _) { reset(); };
-  const ButtonSinkPtr TrimButton = [this](bool pressed) { trim(pressed); };
-
-  void map(Axis::Value v) override {
-    mValue = v;
-    update();
-  }
-
- private:
-  void update() {
-    if (mTrimming) {
-      return;
-    }
-    emit(std::clamp(mValue + mOffset, Axis::MIN, Axis::MAX));
-  }
-
-  void trim(bool pressed) {
-    if (pressed) {
-      mTrimming = true;
-      mStartValue = mValue;
-      return;
-    }
-
-    if (!mTrimming) {
-      return;
-    }
-
-    mTrimming = false;
-
-    mOffset += mStartValue - mValue;
-    mOffset = std::clamp(mOffset, -Axis::MID, Axis::MID);
-    update();
-  }
-
-  void reset() {
-    mOffset = 0;
-    update();
-  }
-
-  Axis::Value mValue = Axis::MID;
-  Axis::Value mOffset = 0;
-
-  bool mTrimming = false;
-  Axis::Value mStartValue = 0;
-};
-
 int main() {
   auto [p, cyclic, vj] = create_profile(VPC_MT50CM2_STICK, VJOY_1);
 
