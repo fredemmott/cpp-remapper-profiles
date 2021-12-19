@@ -43,32 +43,23 @@ auto any(First&& first, Rest&&... rest) {
   return std::static_pointer_cast<ButtonSource>(impl);
 }
 
-class AxisTrimmer final {
+class AxisTrimmer final : public Source<Axis>, public Sink<Axis> {
  private:
-  template <class T>
-  class OutSource : public Source<T> {
-   public:
-    using Source<T>::emit;
-  };
-  std::shared_ptr<OutSource<Axis>> mOut = std::make_shared<OutSource<Axis>>();
-
  public:
-  const AxisSinkPtr In = [this](Axis::Value value) {
-    this->mValue = value;
-    update();
-  };
-
-  const AxisSourcePtr Out = mOut;
-
   const ButtonSinkPtr ResetButton = [this](bool _) { reset(); };
   const ButtonSinkPtr TrimButton = [this](bool pressed) { trim(pressed); };
+
+  void map(Axis::Value v) override {
+    mValue = v;
+    update();
+  }
 
  private:
   void update() {
     if (mTrimming) {
       return;
     }
-    mOut->emit(std::clamp(mValue + mOffset, Axis::MIN, Axis::MAX));
+    emit(std::clamp(mValue + mOffset, Axis::MIN, Axis::MAX));
   }
 
   void trim(bool pressed) {
@@ -124,18 +115,14 @@ int main() {
   // center, n, n+e, e, e+s, s, s+w, w, w+n
   cyclic.Hat1 >> HatToButtons(&vj, cyclic.getButtonCount() + 1, 4);
 
-  // While trim button is held, input is ignored. When released, re-zeroed
   AxisTrimmer xtrim, ytrim;
+  cyclic.XAxis >> &xtrim >> vj.XAxis;
+  cyclic.YAxis >> &ytrim >> vj.YAxis;
 
-  // Connect the axes
-	cyclic.XAxis >> xtrim.In;
-	xtrim.Out >> vj.XAxis;
-
-	cyclic.YAxis >> ytrim.In;
-	ytrim.Out >> vj.YAxis;
-
-
-  // Anything with thumb hat switch => set trim
+  // Set trim with *any* input on the thumb hat switch.
+  //
+  // Pushing straight down while moving the stick is hard, this reduces
+  // accidents.
   //
   // Works best with hat set as 8-way in firmware:
   // - if set to 4-way, NorthEast does not get you any button presses
@@ -149,8 +136,7 @@ int main() {
     >> all(xtrim.TrimButton, ytrim.TrimButton);
 
   // Side finger hat aft => reset trim
-  cyclic.Button19
-    >> all(xtrim.ResetButton, ytrim.ResetButton);
+  cyclic.Button19 >> all(xtrim.ResetButton, ytrim.ResetButton);
 
   p->run();
   return 0;
