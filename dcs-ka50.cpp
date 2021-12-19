@@ -143,14 +143,22 @@ int main() {
   // center, n, n+e, e, e+s, s, s+w, w, w+n
   cyclic.Hat1 >> HatToButtons(&vj, cyclic.getButtonCount() + 1, 4);
 
-  // - Set game to ff/no springs trim mode
-  // - Side thumb hat press => trim
-  // - Side thumb hat back => reset trim
-  // - Bind side thumbhat forward to in-game trim for changing autopilot
-  // settings.
+  // While trim button is held, input is ignored. When released, re-zeroed
   AxisTrimmer xtrim, ytrim;
 
-  // cyclic.Button21 >> all(xtrim.TrimButton, ytrim.TrimButton);// hat press
+  // Connect the axes
+	cyclic.XAxis >> xtrim.In;
+	xtrim.Out >> vj.XAxis;
+
+	cyclic.YAxis >> ytrim.In;
+	ytrim.Out >> vj.YAxis;
+
+
+  // Anything with thumb hat switch => set trim
+  //
+  // Works best with hat set as 8-way in firmware:
+  // - if set to 4-way, NorthEast does not get you any button presses
+  // - if set to 8-way, NorthEast gets North button + East Button
   any(
     cyclic.Button21,
     cyclic.Button22,
@@ -158,14 +166,10 @@ int main() {
     cyclic.Button24,
     cyclic.Button25)
     >> all(xtrim.TrimButton, ytrim.TrimButton);
+
+  // Side finger hat aft => reset trim
   cyclic.Button19
-    >> all(xtrim.ResetButton, ytrim.ResetButton);// index finger side back
-
-  cyclic.XAxis >> xtrim.In;
-  xtrim.Out >> vj.XAxis;
-
-  cyclic.YAxis >> ytrim.In;
-  ytrim.Out >> vj.YAxis;
+    >> all(xtrim.ResetButton, ytrim.ResetButton);
 
   p->run();
   return 0;
