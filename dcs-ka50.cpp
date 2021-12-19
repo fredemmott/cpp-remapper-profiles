@@ -6,42 +6,7 @@
  * in the root directory of this source tree.
  */
 
-#include <functional>
-
 #include "easymode.h"
-
-class AnyOfButton final : public Sink<Button>, public Source<Button> {
- private:
-  uint16_t mPressed = 0;
-
- public:
-  virtual void map(bool pressed) override {
-    if (pressed) {
-      mPressed++;
-      if (mPressed == 1) {
-        emit(true);
-      }
-      return;
-    }
-
-    mPressed--;
-    if (mPressed == 0) {
-      emit(false);
-    }
-  }
-};
-
-template <typename First, typename... Rest>
-auto any(First&& first, Rest&&... rest) {
-  std::vector<ButtonSourcePtr> inners {
-    std::forward<First>(first), std::forward<Rest>(rest)...};
-  auto impl = std::make_shared<AnyOfButton>();
-  auto as_sink = std::static_pointer_cast<ButtonSink>(impl);
-  for (auto& inner: inners) {
-    inner >> as_sink;
-  }
-  return std::static_pointer_cast<ButtonSource>(impl);
-}
 
 int main() {
   auto [p, cyclic, vj] = create_profile(VPC_MT50CM2_STICK, VJOY_1);
