@@ -14,10 +14,7 @@ int main() {
 
   // BF2042 fails if there are *any* other DirectInput game controllers,
   // so hide them all.
-  HidHide hide_unused_devices({// VJoy 1
-                               HardwareID {"HID\\HIDCLASS&Col01"},
-                               // VJoy 2
-                               HardwareID {"HID\\HIDCLASS&Col02"}});
+  HidHide hide_unused_devices({VJOY_1_IN, VJOY_2_IN});
 
   auto invert = [](Axis::Value value) { return Axis::MAX - value; };
 

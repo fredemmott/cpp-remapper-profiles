@@ -8,8 +8,8 @@
 #include "easymode.h"
 
 int main() {
-  auto [p, vj1, vj2] = create_profile(
-    HardwareID {"HID\\HIDCLASS&Col01"}, HardwareID {"HID\\HIDCLASS&Col02"});
+  auto [p, _hide_unused_vj1, _hide_unused_vj2]
+    = create_profile(VJOY_1_IN, VJOY_2_IN);
 
   p.run();
   return 0;
