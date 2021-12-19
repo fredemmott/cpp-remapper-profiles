@@ -11,6 +11,6 @@ int main() {
   auto [p, vj1, vj2] = create_profile(
     HardwareID {"HID\\HIDCLASS&Col01"}, HardwareID {"HID\\HIDCLASS&Col02"});
 
-  p->run();
+  p.run();
   return 0;
 }

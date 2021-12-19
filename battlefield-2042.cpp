@@ -74,6 +74,6 @@ int main() {
   throttle.Button46 >> x360.ButtonBack;
   throttle.Button48 >> x360.ButtonStart;
 
-  p->run();
+  p.run();
   return 0;
 }

@@ -95,7 +95,8 @@ class AxisTrimmer final : public Source<Axis>, public Sink<Axis> {
 int main() {
   auto [p, cyclic, vj] = create_profile(VPC_MT50CM2_STICK, VJOY_1);
 
-  p->passthrough(cyclic, vj);
+  // Pass through everything :)
+  cyclic >> vj;
 
   // I like the firmware to preserve as much information as possible, to I have
   // the trigger guard button indicate the current state, instead of triggering
@@ -138,6 +139,6 @@ int main() {
   // Side finger hat aft => reset trim
   cyclic.Button19 >> all(xtrim.ResetButton, ytrim.ResetButton);
 
-  p->run();
+  p.run();
   return 0;
 }

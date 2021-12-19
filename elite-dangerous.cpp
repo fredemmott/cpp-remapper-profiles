@@ -20,8 +20,8 @@ int main() {
   auto [p, l, r, vl, vr]
     = create_profile(VPC_LEFT_WARBRD, VPC_RIGHT_WARBRD, VJOY_1, VJOY_2);
 
-  p->passthrough(l, vl);
-  p->passthrough(r, vr);
+  l >> vl;
+  r >> vr;
 
   // XY deadzones
   l.XAxis >> SquareDeadzone(5_percent) >> vl.XAxis;
@@ -35,6 +35,6 @@ int main() {
   r.RXAxis >> SquareDeadzone(90_percent) >> vr.RXAxis;
   r.RYAxis >> SquareDeadzone(90_percent) >> vr.RYAxis;
 
-  p->run();
+  p.run();
   return 0;
 }

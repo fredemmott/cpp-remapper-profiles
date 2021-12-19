@@ -11,8 +11,8 @@ int main() {
   auto [p, throttle, stick, vj1, vj2]
     = create_profile(VPC_MT50CM3_THROTTLE, VPC_RIGHT_WARBRD, VJOY_1, VJOY_2);
 
-  p->passthrough(throttle, vj1);
-  p->passthrough(stick, vj2);
+  throttle >> vj1;
+  stick >> vj2;
 
   const auto THROTTLE_BUTTONS = throttle.getButtonCount();
   const auto STICK_BUTTONS = stick.getButtonCount();
@@ -37,6 +37,6 @@ int main() {
     {0_percent, 5_percent, vj2.button(STICK_BUTTONS + 3)},
     {95_percent, 100_percent, vj2.button(STICK_BUTTONS + 4)}};
 
-  p->run();
+  p.run();
   return 0;
 }
