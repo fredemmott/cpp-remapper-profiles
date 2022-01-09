@@ -10,7 +10,7 @@
 
 int main() {
   auto [p, cyclic, vj, _hide_unused_vj2]
-    = create_profile(VPC_MT50CM2_STICK, VJOY_1, VJOY_2_IN);
+    = create_profile(VPC_MT50CM2_SHARKA_CYCLIC, VJOY_1, VJOY_2_IN);
 
   // Pass through everything :)
   cyclic >> vj;
