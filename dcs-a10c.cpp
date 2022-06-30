@@ -9,22 +9,6 @@
 #include "common_buttons.h"
 #include "easymode.h"
 
-class Shift : public ButtonSink {
- private:
-  bool* mShifted;
-  ButtonSinkPtr mA, mB;
-
- public:
-  Shift(bool* shifted, const ButtonSinkPtr& a, const ButtonSinkPtr& b)
-    : mShifted(shifted), mA(a), mB(b) {
-  }
-
-  virtual void map(bool value) override {
-    auto next = *mShifted ? mB : mA;
-    next->map(value);
-  }
-};
-
 int main() {
   auto [p, stick, throttle, vj1, vj2] = create_profile(
     VPC_MT50CM2_TM_STICK, UnhiddenDevice(TM_WARTHOG_THROTTLE), VJOY_1, VJOY_2);
