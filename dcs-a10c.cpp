@@ -46,8 +46,13 @@ int main() {
   throttle.Button6 >> Shift(
     &shifted, vcommon.button(ButtonIDs::VAICOM_VHF_FM), vthrottle.Button6);
 
+  // Gun trigger
   stick.Button1 >> Shift(
     &shifted, vstick.Button1, vcommon.button(ButtonIDs::RECENTER_VR_HEADSET));
+  // Master mode button
+  stick.Button5 >> Shift(
+    &shifted, vstick.Button5, vcommon.button(ButtonIDs::OKB_SWITCH_KNEEBOARDS));
+  // DMS
   stick.Button11 >> Shift(
     &shifted, vstick.Button11, vcommon.button(ButtonIDs::OKB_PREVIOUS_TAB));
   stick.Button12 >> Shift(

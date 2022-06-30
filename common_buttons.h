@@ -14,6 +14,8 @@
 // profiles
 namespace ButtonIDs {
 
+const uint8_t OKB_SWITCH_KNEEBOARDS = 120;
+
 const uint8_t VAICOM_TX_1 = 121;
 const uint8_t VAICOM_TX_2 = 122;
 const uint8_t VAICOM_TX_3 = 123;
