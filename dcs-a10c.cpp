@@ -11,7 +11,7 @@
 
 int main() {
   auto [p, stick, throttle, vj1, vj2] = create_profile(
-    VPC_MT50CM2_TM_STICK, UnhiddenDevice(TM_WARTHOG_THROTTLE), VJOY_1, VJOY_2);
+    VPC_MT50CM2_TM_STICK, UnhiddenDevice(TM_WARTHOG_THROTTLE), FAVHID_1, FAVHID_2);
 
   auto& vcommon = vj1;
   auto& vstick = vj1;
